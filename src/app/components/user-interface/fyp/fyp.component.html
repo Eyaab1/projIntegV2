@@ -1,0 +1,37 @@
+<main>
+    <div class="container">
+         
+         <div class="middle">
+            <form (submit)="addPost(description.value)">
+                <div class="createPost">
+                  <h3 class="mini-heading">Create Post</h3>
+                  <div class="post-text">
+                    <img src="/assets/images/profile-1.jpg" alt="user">
+                    <input type="text" placeholder="What's on your mind, zahidul" #description>
+                  </div>
+                  <div class="post-icon">
+                    <div class="flex">
+                      <label for="gallery" id="gallerylabel">Gallery</label>
+                      <input type="file" id="galleryinput" accept="image/*" multiple>
+                    </div>
+                    <div class="flex">
+                      <label for="attachment" id="attatchmentLabael">File</label>
+                      <input type="file" id="attachmentInput">
+                    </div>
+                    <input type="submit" value="Post" class="btn btn-primary ">
+                  </div>
+                </div>
+              </form>
+        
+        <div class="feeds">
+          <!-- Your feed content goes here -->
+        </div>
+      </div>
+  
+      <div class="right">
+        <div class="calen">
+          <app-calendrier></app-calendrier>
+        </div>
+      </div>
+    </div>
+  </main>

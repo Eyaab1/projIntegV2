@@ -1,18 +1,18 @@
 import { User } from './user';
 
 
-// export class Administrateur extends User{
-//     constructor(
-//         private id:Number,
-//         private nom:String,
-//         private prenom:String,
-//         private email:String,
-//         private numtel:Number,
-//         private type:String,
-//         private password:String
+export class Administrateur extends User{
+    constructor(
         
-        
-//     ) { 
-        
-//       }
-// }
+        nom: string,
+        prenom: string,
+        email: string,
+        numtel: number,
+        type: string,
+        password: string,
+       private typeAd:String,
+        private role:String
+    ) {
+        super(nom, prenom, email, numtel, type, password);
+    }
+}

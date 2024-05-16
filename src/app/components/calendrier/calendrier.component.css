@@ -1,0 +1,6 @@
+.mat-calendar-body-active {
+    .mat-calendar-body-today {
+        color: red;
+        background-color: blue;
+    }
+}
