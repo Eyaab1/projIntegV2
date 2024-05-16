@@ -80,19 +80,40 @@ main .container {
     box-shadow: 0 2px 5px 0 var(--shadow);
     color: var(--black);
 }
-#attachmentInput{
-
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+    padding: 4px 10px;
+    background: #ffebed;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    overflow: hidden;
 }
-#attachementLabel{
-
+.custom-file-input i {
+    background: #ff4154;
+    padding: 4px;
+    border-radius: 50%;
+    margin-right: 8px;
 }
-#gallerylabel{
 
+/* Style for the actual file input */
+.custom-file-input input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .post-icon{
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    
 }
 .post-icon a{
     margin-right: 10px;
