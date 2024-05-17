@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { FypComponent } from './components/user-interface/fyp/fyp.component';
-import { profile } from 'console';
 import { ProfileComponent } from './components/user-interface/profile/profile.component';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { UserInterfaceComponent } from './components/user-interface/user-interface.component';
@@ -11,13 +9,11 @@ import { CalendrierComponent } from './components/calendrier/calendrier.componen
 import { SettingComponent } from './components/user-interface/setting/setting.component';
 
 export const routes: Routes = [
-    {path:'', component:HomeComponent},
-    {path:'login', component:LoginComponent},
-    {path:'home',component:HomeComponent},
-    {path:'userInter',component:UserInterfaceComponent,
+    {path:'homepage', title:'homepage', component:HomeComponent},
+    {path:'userInter',title:'user interface',component:UserInterfaceComponent,
         children:[
-            {path:'',component:FypComponent},
-            {path:'fyp',component:FypComponent},
+            { path: '', redirectTo: 'fyp', pathMatch: 'full' },
+            {path:'fyp',title:'for you',component:FypComponent},
             {path:'espaceClasse',component:EspaceClasseComponent},
             {path:'profile',component:ProfileComponent},
             {path:'setting',component:SettingComponent},
@@ -25,6 +21,7 @@ export const routes: Routes = [
         ]
     },
     {path:"calendar", component:CalendrierComponent},
+    {path:"", redirectTo:"homepage",pathMatch:"full"},
     {path:"**", component:ErrorsComponent},
     
 ];
