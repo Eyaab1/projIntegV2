@@ -7,10 +7,14 @@ import { EspaceClasseComponent } from './components/user-interface/espace-classe
 import { HomeComponent } from './components/home/home.component';
 import { CalendrierComponent } from './components/calendrier/calendrier.component';
 import { SettingComponent } from './components/user-interface/setting/setting.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
     {path:'homepage', title:'homepage', component:HomeComponent},
+    {path:'login', title:'homepage', component:LoginComponent},
+
     {path:'userInter',title:'user interface',component:UserInterfaceComponent,
+    
         children:[
             { path: '', redirectTo: 'fyp', pathMatch: 'full' },
             {path:'fyp',title:'for you',component:FypComponent},

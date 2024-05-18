@@ -1,12 +1,12 @@
 export class User {
     constructor(
         
-        protected nom:String,
-        protected prenom:String,
-        protected email:String,
-        protected numtel:Number,
-        protected type:String,
-        protected password:String
+        public nom:String,
+        public prenom:String,
+        public email:String,
+        public numtel:Number,
+        public type:String,
+        public password:String
     ){}
 }
 

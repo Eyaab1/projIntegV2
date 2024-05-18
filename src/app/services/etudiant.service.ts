@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Etudiant } from '../classes/etudiant';
-const baseUrl='';
+const baseUrl='http://localhost:8000/etudiant';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +12,9 @@ export class EtudiantService {
 
   getEtudiant():Observable<Etudiant[]>{
     return this.http.get<Etudiant[]>(`${baseUrl}`);
-
   }
-
   addEtudiant(newEtud: Etudiant): Observable<Etudiant> {
     return this.http.post<Etudiant>(baseUrl, newEtud);
-
   }
   getEtudiantById(etudiantID: number):Observable<Etudiant>{
     return this.http.get<Etudiant>(`${baseUrl}/${etudiantID}`);
@@ -28,4 +25,5 @@ export class EtudiantService {
   deleteEtudiant(idEtud:Number):Observable<Etudiant>{
     return this.http.delete<Etudiant>(baseUrl + "/" + idEtud);
   }
+  
 }

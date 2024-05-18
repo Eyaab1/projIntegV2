@@ -2,25 +2,54 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';  // Corrected import
 import { CommonModule } from '@angular/common';
+import { EnseignantService } from '../../services/enseignant.service';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+
+
+import { Enseignant } from '../../classes/enseignant';
 
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,HttpClientModule],
+  providers: [
+    EnseignantService 
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit  {
   loginform!: FormGroup;
-
-  constructor(private router: Router, private fb: FormBuilder) {}
+  enseignant:any;
+  enseignants!:Enseignant[];
+  constructor(private router: Router, 
+    private fb: FormBuilder,
+    private ensService: EnseignantService
+  ) {}
 
   ngOnInit(): void {
     this.loginform = this.fb.group({
-      user: ['', Validators.required],
+      email: ['', Validators.required],
       pwd: ['', Validators.required]
+    });
+
+    this.ensService.getEnseignantByEmail('aaa@gmail.com').subscribe(
+      (data) => {
+        this.enseignant = data;
+        
+      },
+      (error) => {
+        console.error('Error fetching user', error);
+      }
+    );
+    this.getAllEnseiggnant();
+  }
+  getAllEnseiggnant() {
+    this.ensService.getAllEnseiggnant().subscribe((data) => {
+      this.enseignants = data;
+      console.log(this.enseignants);
     });
   }
 
@@ -40,11 +69,26 @@ export class LoginComponent implements OnInit  {
     return this.usermb?.errors?.['required'] && this.usermb?.touched;
   }
   
-  login() {
-    if (this.loginform.valid) {
-      const username = this.loginform.get('user')?.value;
-      const password = this.loginform.get('pwd')?.value;
-    }
+
+  login () {
+    const { email, password } = this.loginform.value;
+    this.ensService.getEnseignantByEmail(email).subscribe(
+      (Enseig) => {
+        
+        if (Enseig && Enseig.password === password) {
+          this.router.navigate(['/userInter']);
+        } else {
+          console.log('Invalid credentials');
+        }
+      },
+      (error) => {
+        console.log('User not found');
+      }
+    );
+  }
+    
+
+
   }
   
-}
+
