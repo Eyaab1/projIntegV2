@@ -7,7 +7,8 @@ import { Enseignant } from '../classes/enseignant';
   providedIn: 'root'
 })
 export class EnseignantService {
-  private baseUrl ='http//localhost:8000';
+  private baseUrl = 'http://localhost:8000'; 
+
 
   constructor(private http:HttpClient) { }
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../classes/post';
-const baseUrl = 'http://localhost:8000/posts';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,26 +10,24 @@ const baseUrl = 'http://localhost:8000/posts';
 export class PostService {
   
   constructor(private http: HttpClient) {}
-
+  private baseUrl ='http://localhost:8000';
   getPosts(): Observable<Post[]> {
     // Add JWT token to request headers
-    const token = localStorage.getItem('jwtToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Post[]>(baseUrl, { headers });
+    return this.http.get<Post[]>(`${this.baseUrl}/post`);
   }
   addPost(newPost: Post): Observable<Post> {
-    return this.http.post<Post>(baseUrl, newPost);
+    return this.http.post<Post>(`${this.baseUrl}/post/new`, newPost);
 
   }
   getPostById(PostId: number):Observable<Post>{
-    return this.http.get<Post>(`${baseUrl}/${PostId}`);
+    return this.http.get<Post>(`${this.baseUrl}/post/${PostId}/edit`);
   }
-  UpdatePost(id: number, data: any): Observable<Post> {
-    return this.http.put<Post>(baseUrl + "/" + id, data);
+  UpdatePost(id: number, post: Post): Observable<Post> {
+    return this.http.put<Post>(`${this.baseUrl}/post/${id}/edit`, post);
   }
   
   deletePost(idPost:Number):Observable<Post>{
-    return this.http.delete<Post>(baseUrl + "/" + idPost);
+    return this.http.delete<Post>(`${this.baseUrl}/${idPost}`);
   }
   
 }

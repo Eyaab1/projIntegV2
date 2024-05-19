@@ -4,22 +4,24 @@ import { CalendrierComponent } from "../../calendrier/calendrier.component";
 import { Post } from '../../../classes/post';
 import { PostService } from '../../../services/post.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-fyp',
     standalone: true,
     templateUrl: './fyp.component.html',
     styleUrl: './fyp.component.css',
-    imports: [HeaderComponent, CalendrierComponent, HttpClientModule ],
+    imports: [HeaderComponent, CalendrierComponent, HttpClientModule ,CommonModule],
     providers: [
       PostService
     ]
 })
 export class FypComponent implements OnInit{
   posts: Post[] = [];
+  newPostContent: string = '';
 
   constructor(private postService: PostService) { }
-  
+
   ngOnInit(): void {
     this.fetchPosts();
   }
@@ -30,17 +32,20 @@ export class FypComponent implements OnInit{
     });
   }
 
-  addPost(description: string): void {
-    const newPost: Post = {
-      contenu: description,
-      published: new Date(),
-      likes: [],
-      comments: []
-    };
+  addNewPost(): void {
+    if (this.newPostContent.trim() !== '') {
+      const newPost: Post = {
+        contenu: this.newPostContent,
+        published: new Date(),
+        likes: [],
+        comments: []
+      };
 
-    this.postService.addPost(newPost).subscribe((post: Post) => {
-      this.fetchPosts();
-    });
+      this.postService.addPost(newPost).subscribe((post: Post) => {
+        this.fetchPosts(); // Refresh the posts after adding a new one
+        this.newPostContent = ''; // Clear the input field
+      });
+    }
   }
 }
 

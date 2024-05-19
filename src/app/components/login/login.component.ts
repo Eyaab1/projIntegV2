@@ -69,24 +69,23 @@ export class LoginComponent implements OnInit  {
     return this.usermb?.errors?.['required'] && this.usermb?.touched;
   }
   
-
-  login () {
+  login() {
     const { email, password } = this.loginform.value;
     this.ensService.getEnseignantByEmail(email).subscribe(
-      (Enseig) => {
-        
-        if (Enseig && Enseig.password === password) {
+      (ens) => {
+        if (ens && ens.password === password) {
           this.router.navigate(['/userInter']);
+          console.log("User found, WELCOME!!");
         } else {
-          console.log('Invalid credentials');
+          console.log("Invalid user");
         }
       },
       (error) => {
-        console.log('User not found');
+        console.error('Error fetching user', error);
       }
     );
   }
-    
+  
 
 
   }

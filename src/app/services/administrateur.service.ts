@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Administrateur } from '../classes/administrateur';
-const baseUrl='http://localhost:8000/administrateur';
+const baseUrl='http://localhost:8000';
 @Injectable({
   providedIn: 'root'
 })
