@@ -22,7 +22,7 @@ export class UserService {
 
   getUserByEmail(email:string):Observable<User| null>{
     let params = new HttpParams().set('email', email);
-    return this.http.get<User>(`${this.baseUrl}/enseignant`, { params }).pipe(
+    return this.http.get<User>(`${this.baseUrl}/user/email`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
           return of(null);

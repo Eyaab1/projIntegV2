@@ -7,6 +7,7 @@ import { HttpClientModule, HttpParams } from '@angular/common/http';
 
 
 import { Enseignant } from '../../classes/enseignant';
+import { UserService } from '../../services/user.service';
 
 
 
@@ -15,7 +16,8 @@ import { Enseignant } from '../../classes/enseignant';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule,HttpClientModule],
   providers: [
-    EnseignantService 
+    EnseignantService,
+    UserService 
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -26,13 +28,14 @@ export class LoginComponent implements OnInit  {
   enseignants!:Enseignant[];
   constructor(private router: Router, 
     private fb: FormBuilder,
-    private ensService: EnseignantService
+    private ensService: EnseignantService,
+    private userService:UserService
   ) {}
 
   ngOnInit(): void {
     this.loginform = this.fb.group({
       email: ['', Validators.required],
-      pwd: ['', Validators.required]
+      password: ['', Validators.required]
     });
 
     this.ensService.getEnseignantByEmail('aaa@gmail.com').subscribe(
@@ -71,7 +74,8 @@ export class LoginComponent implements OnInit  {
   
   login() {
     const { email, password } = this.loginform.value;
-    this.ensService.getEnseignantByEmail(email).subscribe(
+    console.log("Form Values:", { email, password });
+    this.userService.getUserByEmail(email).subscribe(
       (ens) => {
         if (ens && ens.password === password) {
           this.router.navigate(['/userInter']);
