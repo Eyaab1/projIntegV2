@@ -5,6 +5,8 @@ import { Post } from '../../../classes/post';
 import { PostService } from '../../../services/post.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { User } from '../../../classes/user';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-fyp',
@@ -17,8 +19,12 @@ import { CommonModule } from '@angular/common';
 export class FypComponent implements OnInit {
   posts: Post[] = [];
   newPostContent: string = '';
+  currentUser!: User | null;
 
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    private authService : AuthService
+  ) {}
 
   ngOnInit(): void {
     this.fetchPosts();
@@ -44,5 +50,11 @@ export class FypComponent implements OnInit {
         this.newPostContent = ''; // Clear the input field
       });
     }
+   
   }
+  getCurrentUser(){
+    this.currentUser=this.authService.getCurrentUser();
+    return this.currentUser;
+  }
+  
 }
