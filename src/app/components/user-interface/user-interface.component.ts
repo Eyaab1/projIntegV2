@@ -8,7 +8,8 @@ import { RouterOutlet } from '@angular/router';
     standalone: true,
     templateUrl: './user-interface.component.html',
     styleUrl: './user-interface.component.css',
-    imports: [HeaderComponent, SidebarComponent,RouterOutlet]
+    imports: [HeaderComponent, SidebarComponent,RouterOutlet],
+    
 })
 export class UserInterfaceComponent {
 

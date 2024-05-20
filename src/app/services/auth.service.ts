@@ -1,36 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
+import { User } from '../classes/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  private readonly USER_KEY = 'user';
+  private authenticated = false;
+  isAnAdmin ='';
 
-  login(credentials: { username: string, password: string }): Observable<any> {
-    return this.http.post('/login', credentials).pipe(
-      catchError(error => {
-        console.error('Login failed:', error);
-        return throwError(error);
-      })
-    );
-  }
-  
-  logout(): Observable<any> {
-    return this.http.get('/logout').pipe(
-      catchError(error => {
-        console.error('Logout failed:', error);
-        return throwError(error);
-      })
-    );
+  constructor(
+    private router: Router,
+    private userService: UserService 
+  ) {}
+
+  login(email: string, password: string): void { // Removed `remember` parameter
+    this.userService.getUserByEmail(email).subscribe((authenticatedUser) => {
+      if (authenticatedUser && authenticatedUser.password === password) {
+        localStorage.setItem(this.USER_KEY, JSON.stringify(authenticatedUser));
+        localStorage.setItem(this.isAnAdmin,authenticatedUser.type.toString())
+        if (authenticatedUser.type === 'administrateur') {
+          window.location.href = 'http://localhost:8000/admin';
+        } else {
+          this.router.navigate(['/userInter']);
+        }
+      } else {
+        alert('User not found or incorrect password');
+      }
+    });
   }
 
-  // Method to check if the user is authenticated
+  logout(): void {
+    localStorage.removeItem(this.USER_KEY);
+    sessionStorage.removeItem(this.USER_KEY);
+    alert('You have been logged out');
+    this.router.navigate(['/homepage']);
+    // window.location.reload();
+  }
+
   isAuthenticated(): boolean {
-    // Implement your authentication logic here
-    // For demonstration purposes, let's assume the user is authenticated if they have a token stored in localStorage
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem(this.USER_KEY) || !!sessionStorage.getItem(this.USER_KEY);
+  }
+
+
+  setAuthenticated(value: boolean): void {
+    this.authenticated = value;
+  }
+  getCurrentUser(): User | null {
+    const storedUser = localStorage.getItem(this.USER_KEY);
+    return storedUser ? JSON.parse(storedUser) : null;
   }
 }

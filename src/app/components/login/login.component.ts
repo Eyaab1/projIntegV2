@@ -1,35 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';  // Corrected import
+import { Router } from '@angular/router';  
 import { CommonModule } from '@angular/common';
-import { EnseignantService } from '../../services/enseignant.service';
-import { HttpClientModule, HttpParams } from '@angular/common/http';
-
-
-import { Enseignant } from '../../classes/enseignant';
+import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { User } from '../../classes/user';
 
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,HttpClientModule],
-  providers: [
-    EnseignantService,
-    UserService 
-  ],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  providers: [AuthService, UserService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit  {
   loginform!: FormGroup;
   enseignant:any;
-  enseignants!:Enseignant[];
-  constructor(private router: Router, 
+  users!:User[];
+  
+  constructor(
+    private router: Router, 
     private fb: FormBuilder,
-    private ensService: EnseignantService,
-    private userService:UserService
+    private userService: UserService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +35,7 @@ export class LoginComponent implements OnInit  {
       password: ['', Validators.required]
     });
 
-    this.ensService.getEnseignantByEmail('aaa@gmail.com').subscribe(
+    this.userService.getUserByEmail('aaa@gmail.com').subscribe(
       (data) => {
         this.enseignant = data;
         
@@ -47,17 +44,16 @@ export class LoginComponent implements OnInit  {
         console.error('Error fetching user', error);
       }
     );
-    this.getAllEnseiggnant();
+    this.getALLusers();
   }
-  getAllEnseiggnant() {
-    this.ensService.getAllEnseiggnant().subscribe((data) => {
-      this.enseignants = data;
-      console.log(this.enseignants);
+  getALLusers() {
+    this.userService.getAllUsers().subscribe((data) => {
+      this.users = data;
+      console.log(this.users);
     });
   }
-
   get pwdmb() {
-    return this.loginform.get('pwd');
+    return this.loginform.get('password');
   }
 
   pwdoblig() {
@@ -73,25 +69,17 @@ export class LoginComponent implements OnInit  {
   }
   
   login() {
-    const { email, password } = this.loginform.value;
-    console.log("Form Values:", { email, password });
-    this.userService.getUserByEmail(email).subscribe(
-      (ens) => {
-        if (ens && ens.password === password) {
-          this.router.navigate(['/userInter']);
-          console.log("User found, WELCOME!!");
-        } else {
-          console.log("Invalid user");
-        }
-      },
-      (error) => {
-        console.error('Error fetching user', error);
-      }
-    );
+    if (this.loginform.valid) {
+      const email = this.loginform.value.email;
+      const password = this.loginform.value.password;
+      this.authService.login(email, password);
+      
+    }
+  }
   }
   
 
 
-  }
+  
   
 

@@ -10,17 +10,15 @@ import { CommonModule } from '@angular/common';
     selector: 'app-fyp',
     standalone: true,
     templateUrl: './fyp.component.html',
-    styleUrl: './fyp.component.css',
-    imports: [HeaderComponent, CalendrierComponent, HttpClientModule ,CommonModule],
-    providers: [
-      PostService
-    ]
+    styleUrls: ['./fyp.component.css'],
+    imports: [HeaderComponent, CalendrierComponent, CommonModule], 
+    providers: [PostService],
 })
-export class FypComponent implements OnInit{
+export class FypComponent implements OnInit {
   posts: Post[] = [];
   newPostContent: string = '';
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService) {}
 
   ngOnInit(): void {
     this.fetchPosts();
@@ -48,4 +46,3 @@ export class FypComponent implements OnInit{
     }
   }
 }
-

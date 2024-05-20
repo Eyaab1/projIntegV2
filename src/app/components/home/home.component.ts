@@ -1,12 +1,18 @@
 import { Component, ElementRef, Renderer2, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { LoginComponent } from '../login/login.component';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+
 @Component({
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
-    imports: [LoginComponent,CommonModule]
+    imports: [LoginComponent,CommonModule],
+    providers: [
+      
+    ],
 })
 export class HomeComponent {
   constructor(private el: ElementRef) {}

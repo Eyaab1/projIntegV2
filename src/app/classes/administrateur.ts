@@ -3,7 +3,7 @@ import { User } from './user';
 
 export class Administrateur extends User{
     constructor(
-        
+        id:Number,
         nom: string,
         prenom: string,
         email: string,
@@ -13,6 +13,6 @@ export class Administrateur extends User{
        private typeAd:String,
         private role:String
     ) {
-        super(nom, prenom, email, numtel, type, password);
+        super(id,nom, prenom, email, numtel, type, password);
     }
 }

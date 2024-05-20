@@ -2,7 +2,7 @@ import { User } from "./user";
 
 export class Etudiant extends User {
     constructor(
-        
+        id:Number,
         nom: string,
         prenom: string,
         email: string,
@@ -12,6 +12,6 @@ export class Etudiant extends User {
         private typeEt: string,
         private specialite: string
     ){
-        super(nom, prenom, email, numtel, type, password);
+        super(id,nom, prenom, email, numtel, type, password);
     }
 }

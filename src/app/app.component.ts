@@ -9,7 +9,8 @@ import { LoginComponent } from "./components/login/login.component";
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, SidebarComponent, HeaderComponent, LoginComponent]
+    imports: [RouterOutlet, SidebarComponent, HeaderComponent, LoginComponent],
+    
 })
 export class AppComponent {
   title = 'projv2';

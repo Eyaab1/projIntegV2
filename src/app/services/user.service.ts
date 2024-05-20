@@ -12,15 +12,13 @@ export class UserService {
 
   private baseUrl = 'http://localhost:8000'; 
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http:HttpClient) { }
-
-  getAllUsers():Observable<User[]>{
+  getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/users`);
-
   }
 
-  getUserByEmail(email:string):Observable<User| null>{
+  getUserByEmail(email: string): Observable<User | null> {
     let params = new HttpParams().set('email', email);
     return this.http.get<User>(`${this.baseUrl}/user/email`, { params }).pipe(
       catchError((error: HttpErrorResponse) => {
