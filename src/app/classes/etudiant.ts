@@ -10,8 +10,9 @@ export class Etudiant extends User {
         type: string,
         password: string,
         private typeEt: string,
-        private specialite: string
+        private specialite: string,
+        dtype: string,
     ){
-        super(id,nom, prenom, email, numtel, type, password);
+        super(id,nom, prenom, email, numtel, type, password,dtype);
     }
 }

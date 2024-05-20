@@ -1,25 +1,28 @@
+<div class="container">
+  <div class="profile">
+    <h1>User Profile</h1>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" formControlName="firstName" placeholder="Enter your first name" required>
+      </div>
 
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" formControlName="lastName" placeholder="Enter your last name" required>
+      </div>
 
-    <div class="container">
-        <div class="profile">
-            <h1 >User Profile</h1>
-            <form action="#" method="post">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+      <div>
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" formControlName="email" placeholder="Enter your email address" required>
+      </div>
 
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
-
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required>
-
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
+      <div>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" formControlName="phone" placeholder="Enter your phone number" required>
+      </div>
+      
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>

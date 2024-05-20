@@ -10,9 +10,10 @@ export class Administrateur extends User{
         numtel: number,
         type: string,
         password: string,
-       private typeAd:String,
-        private role:String
+        typeAd:String,
+        role:String,
+        dtype:string,
     ) {
-        super(id,nom, prenom, email, numtel, type, password);
+        super(id,nom, prenom, email, numtel, type, password,dtype);
     }
 }

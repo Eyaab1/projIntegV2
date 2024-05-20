@@ -35,22 +35,17 @@ export class LoginComponent implements OnInit  {
       password: ['', Validators.required]
     });
 
-    this.userService.getUserByEmail('aaa@gmail.com').subscribe(
-      (data) => {
-        this.enseignant = data;
-        
-      },
-      (error) => {
-        console.error('Error fetching user', error);
-      }
-    );
     this.getALLusers();
+    
   }
   getALLusers() {
     this.userService.getAllUsers().subscribe((data) => {
       this.users = data;
       console.log(this.users);
     });
+  }
+  getUser(){
+    console.log(this.authService.isAdmin());
   }
   get pwdmb() {
     return this.loginform.get('password');
@@ -73,7 +68,7 @@ export class LoginComponent implements OnInit  {
       const email = this.loginform.value.email;
       const password = this.loginform.value.password;
       this.authService.login(email, password);
-      
+      this.authService.isAdmin();
     }
   }
   }

@@ -9,9 +9,10 @@ export class Enseignant extends User {
         numtel: number,
         type: string,
         password: string,
+        dtype:string,
         private TypeEns: string,
         private CodeEns: string
     ){
-        super(id,nom, prenom, email, numtel, type, password)
+        super(id,nom, prenom, email, numtel, type, password,dtype)
     }
 }

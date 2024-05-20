@@ -29,4 +29,11 @@ export class UserService {
       })
     );
   }
+  updateUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/users/${user.id}/edit`, user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    );
+  }
 }

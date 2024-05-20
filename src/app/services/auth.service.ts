@@ -8,19 +8,23 @@ import { User } from '../classes/user';
 })
 export class AuthService {
   private readonly USER_KEY = 'user';
-  private authenticated = false;
-  isAnAdmin ='';
+  private readonly USER_TYPE_KEY = 'user_type';
+  private readonly USER_ROLE_KEY = 'user_role';
+  user!: User;
 
   constructor(
     private router: Router,
     private userService: UserService 
   ) {}
 
-  login(email: string, password: string): void { // Removed `remember` parameter
+  login(email: string, password: string): void { 
     this.userService.getUserByEmail(email).subscribe((authenticatedUser) => {
       if (authenticatedUser && authenticatedUser.password === password) {
         localStorage.setItem(this.USER_KEY, JSON.stringify(authenticatedUser));
-        localStorage.setItem(this.isAnAdmin,authenticatedUser.type.toString())
+
+        if (authenticatedUser.type) {
+          localStorage.setItem(this.USER_TYPE_KEY, authenticatedUser.type);
+        }
         if (authenticatedUser.type === 'administrateur') {
           window.location.href = 'http://localhost:8000/admin';
         } else {
@@ -34,22 +38,26 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.USER_KEY);
-    sessionStorage.removeItem(this.USER_KEY);
+    localStorage.removeItem(this.USER_TYPE_KEY);
+    localStorage.removeItem(this.USER_ROLE_KEY);
     alert('You have been logged out');
     this.router.navigate(['/homepage']);
     // window.location.reload();
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem(this.USER_KEY) || !!sessionStorage.getItem(this.USER_KEY);
+    return !!localStorage.getItem(this.USER_KEY);
+  }
+  
+
+  isAdmin(): boolean {
+    const userRole = localStorage.getItem(this.USER_ROLE_KEY);
+    return userRole === 'administrateur';
   }
 
-
-  setAuthenticated(value: boolean): void {
-    this.authenticated = value;
-  }
   getCurrentUser(): User | null {
     const storedUser = localStorage.getItem(this.USER_KEY);
     return storedUser ? JSON.parse(storedUser) : null;
   }
+
 }
